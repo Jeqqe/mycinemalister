@@ -7,6 +7,7 @@ import resources
 db = SQLAlchemy()
 jwt = JWTManager()
 
+# All the extension related stuff we need to initialize when the app starts go here
 def init_app(app):
 
     db.init_app(app)
