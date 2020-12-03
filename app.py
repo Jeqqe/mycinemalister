@@ -1,7 +1,9 @@
 from flask import Flask
 
 from config import Config
-import resources, extensions
+import resources
+import extensions
+
 
 def create_app():
 

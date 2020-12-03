@@ -11,20 +11,16 @@
           </a>
       </li>
       <li class="nav-item link-btn pt-4">
-        <a class="nav-link" href="/login/">Sign In</a>
+        <a class="nav-link" href="#">Your lists</a>
       </li>
       <li class="nav-item link-btn pt-4">
-        <a class="nav-link" href="/register/">Create Account</a>
+        <a class="nav-link" href="#">New List</a>
       </li>
-      <li class="nav-item link-btn pt-4">
-        <a class="nav-link" href="/movie-lists/">Movie Lists</a>
-      </li>
-      <li class="nav-item link-btn">
-          {% if "logged_in" in session and session["logged_in"]%}
-            <a class="nav-link" href="/auth/logout">Log Out</a>
-          {% else %}
-            <a class="nav-link" href="/login/">Sign In</a>
-          {% endif %}
+    </ul>
+
+    <ul>
+        <li class="nav-item link-btn pt-4">
+        <a class="nav-link" href="#">Movie Lists</a>
       </li>
     </ul>
   </div>

@@ -2,7 +2,7 @@ from flask_restful import Api
 
 from resources.auth import LoginResource, LogoutResource
 from resources.user import UserListResource, UserResource, MeResource
-from resources.page import HomePage, LoginPage
+from resources.page import HomePage, LoginPage, RegisterPage, MovieList, UserHomePage
 
 
 # Each resource created under resources/ that we want to use should be added here,
@@ -24,7 +24,5 @@ def init_app(app):
     # Page resources
     api.add_resource(HomePage, "/")
     api.add_resource(LoginPage, "/login/")
-
-
-
-
+    api.add_resource(RegisterPage, "/register/")
+    api.add_resource(MovieList, "/movie-lists/")
