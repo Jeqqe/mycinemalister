@@ -1,4 +1,6 @@
-
+body {
+  background-color: rgb(39, 39, 39);;
+}
 
 /* TYPOGRAPHY (Tekstien tyylit) */
 
@@ -17,7 +19,12 @@ a {
 /* CLASSES */
 
 .navbar-background {
-    background-color: rgb(248, 123, 114) !important;
+    background-color: rgb(179, 79, 71) !important;
+}
+
+.link-btn {
+  letter-spacing: 1.5px;
+  font-size:18px;
 }
 
 .form-signin {
