@@ -6,7 +6,8 @@ class MovieList(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     movie_title = db.Column(db.String(255))
-    #movie_review = db.Column(db.Text)
+    movie_review = db.Column(db.Text())
+    movie_rating = db.Column(db.Integer())
     # Jotai tähä
 
     is_publish = db.Column(db.Boolean(), default=False)
