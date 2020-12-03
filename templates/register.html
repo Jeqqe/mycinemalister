@@ -10,24 +10,24 @@
         <div class="card card-signin my-5">
           <div class="card-body">
             <h5 class="card-title text-center">Sign Up To MyCinemaLister!</h5>
-            <form class="">
+            <form class="" action="/auth/register" method="POST">
               <div class="form-label-group">
                 <label for="inputUsername">Username</label>
-                <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
               </div>
 
               <div class="form-label-group">
                 <label for="inputEmail">Email address</label>
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
               </div>
 
               <div class="form-label-group">
                 <label for="inputPassword" class="pt-1">Password</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
               </div>
               <div class="form-label-group">
                 <label for="inputRepeatPassword" class="pt-1">Repeat Password</label>
-                <input type="password" id="inputRepeatPassword" class="form-control" placeholder="Repeat Password" required>
+                <input type="password" name="password2" id="inputRepeatPassword" class="form-control" placeholder="Repeat Password" required>
               </div>
 
               <button class="btn btn-lg btn-primary btn-block text-uppercase mt-2" type="submit">Sign up</button>

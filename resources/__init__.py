@@ -1,6 +1,6 @@
 from flask_restful import Api
 
-from resources.auth import LoginResource, LogoutResource
+from resources.auth import LoginResource, LogoutResource, RegisterResource
 from resources.user import UserListResource, UserResource, MeResource
 from resources.page import HomePage, LoginPage, RegisterPage, MovieList, UserHomePage
 
@@ -20,6 +20,7 @@ def init_app(app):
     # Auth resources
     api.add_resource(LoginResource, "/auth/login")
     api.add_resource(LogoutResource, "/auth/logout")
+    api.add_resource(RegisterResource, "/auth/register")
 
     # Page resources
     api.add_resource(HomePage, "/")
