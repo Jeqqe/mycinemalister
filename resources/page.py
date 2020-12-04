@@ -28,8 +28,28 @@ class LoginPage(Resource):
 
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('login.html'), 200, headers)
-      
+
+
 class RegisterPage(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('register.html'), 200, headers)
+
+
+# Tuleeko nää tähän vai pitääkö tehdä oma resources/movie_list.py ?
+class CreateList(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('create_list.html'), 200, headers)
+
+
+class EditList(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('edit_list.html'), 200, headers)
+
+
+class ViewList(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('view_list.html'), 200, headers)
