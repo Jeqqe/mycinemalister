@@ -1,14 +1,12 @@
-from extensions import db
+from models import db
 
-
-class MovieList(db.Model):
+class Movielist(db.Model):
     __tablename__ = "movielist"
 
     id = db.Column(db.Integer, primary_key=True)
     movie_title = db.Column(db.String(255))
-    movie_review = db.Column(db.Text())
+    movie_review = db.Column(db.String(255))
     movie_rating = db.Column(db.Integer())
-    # Jotai tähä
 
     is_publish = db.Column(db.Boolean(), default=False)
     created_at = db.Column(db.DateTime(), nullable=False,
@@ -16,12 +14,6 @@ class MovieList(db.Model):
     updated_at = db.Column(db.DateTime(), nullable=False,
                            server_default=db.func.now(), onupdate=db.func.now())
     user_id = db.Column(db.Integer(), db.ForeignKey("user.id"))
-
-    def data(self):
-        return {
-            'id': self.id,
-            'user_id': self.user_id
-        }
 
     @classmethod
     def get_all_published(cls):
@@ -38,3 +30,9 @@ class MovieList(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+    def data(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id
+        }

@@ -2,8 +2,7 @@ from flask import Flask
 
 from config import Config
 import resources
-import extensions
-
+import models
 
 def create_app():
 
@@ -11,7 +10,7 @@ def create_app():
     app.config.from_object(Config)
 
     # Defines all the extensions that the application uses (extensions/__init__.py)
-    extensions.init_app(app)
+    models.init_app(app)
 
     # Defines all the flask Resources we're using on the app (resources/__init__.py)
     resources.init_app(app)
