@@ -14,13 +14,21 @@
         <a class="nav-link" href="#">Your lists</a>
       </li>
       <li class="nav-item link-btn pt-4">
-        <a class="nav-link" href="#">New List</a>
+        <a class="nav-link" href="">New List</a> <!-- Pitäis toho saada users/<string:username>/create -->
+      </li>
+      <li class="nav-item link-btn pt-4">
+        <a class="nav-link" href="/movie-lists">All Lists</a>
       </li>
     </ul>
 
-    <ul>
-        <li class="nav-item link-btn pt-4">
-        <a class="nav-link" href="#">Movie Lists</a>
+    <ul class="navbar-nav mx-auto">
+
+      <li class="nav-item link-btn pt-4">
+          <a class="nav-link text-dark font-weight-bold">{{ session['username'] }}</a>
+      </li>
+       
+      <li class="nav-item link-btn pt-4">
+          <a class="nav-link" href="/auth/logout">Log Out</a>
       </li>
     </ul>
   </div>
