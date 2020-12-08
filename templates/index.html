@@ -2,7 +2,7 @@
 
 {% block content%}
 <div class="base-bg">
-{% if "logged_in" in session and session["logged_in"]%}
+{% if current_user.is_authenticated %}
 {% include 'user_navbar.html'%}
 {% else %}
 {% include 'navbar.html' %}
@@ -12,8 +12,8 @@
 
     <div class="container pt-5">
         <div class="jumbotron">
-            {% if "logged_in" in session and session["logged_in"] %}
-                <h1 class="display-4 text-center">Welcome, {{ session['username'] }}!</h1>
+            {% if current_user.is_authenticated %}
+                <h1 class="display-4 text-center">Welcome, {{ current_user.username }}!</h1>
                 <hr class="my-4">
             {% else %}
                 <h1 class="display-4 text-center">Welcome to MyCinemaLister!</h1>
