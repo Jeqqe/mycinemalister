@@ -1,5 +1,7 @@
 from http import HTTPStatus
-from flask import request, session, redirect
+
+from flask import request, redirect
+from flask_login import login_user, login_required, logout_user
 from flask_restful import Resource
 
 from utils import check_password, hash_password
@@ -12,7 +14,6 @@ class LoginResource(Resource):
 
         # Get user login information from form
         auth = request.form
-
         email = auth.get("email")
         password = auth.get("password")
 
@@ -21,20 +22,16 @@ class LoginResource(Resource):
         if not user or not check_password(password, user.password):
             return {"message": "email or password is incorrect"}, HTTPStatus.UNAUTHORIZED
 
-        session["logged_in"] = True
-        session["username"] = user.username
-        session["email"] = email
-
+        login_user(user, force=True)
         return redirect("/")
 
 
 class LogoutResource(Resource):
 
+    @login_required
     def get(self):
 
-        if "logged_in" in session and session["logged_in"] == True:
-            session.clear()
-
+        logout_user()
         return redirect("/")
 
 
@@ -53,11 +50,7 @@ class RegisterResource(Resource):
             return {"message": "email already used"}, HTTPStatus.BAD_REQUEST
 
         password = hash_password(non_hash_password)
-        user = User(
-            username=username,
-            email=email,
-            password=password
-        )
+        user = User(username=username,email=email,password=password)
         user.save()
         
         return redirect("/login")

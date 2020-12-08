@@ -2,7 +2,8 @@ from flask_restful import Api
 
 from resources.auth import LoginResource, LogoutResource, RegisterResource
 from resources.user import UserListResource, UserResource, MeResource
-from resources.page import HomePage, LoginPage, RegisterPage, MovieList, UserHomePage, CreateList, EditList, ViewList
+from resources.page import HomePage, LoginPage, RegisterPage, MovieList, UserHomePage
+from resources.movielist import CreateList, EditList, ViewList
 
 
 # Each resource created under resources/ that we want to use should be added here,
@@ -28,7 +29,8 @@ def init_app(app):
     api.add_resource(RegisterPage, "/register/")
     api.add_resource(MovieList, "/movie-lists/")  # Kaikki listat näkyy tästä
 
-    # Tähän pitäis päästä vain session oma käyttäjä (muut ei pysty luomaan toisten listoja)
+    # Movielist resources
     api.add_resource(ViewList, "/users/<string:username>/list")
     api.add_resource(CreateList, "/users/<string:username>/create")
     api.add_resource(EditList, "/users/<string:username>/<int:list_id>/edit")
+

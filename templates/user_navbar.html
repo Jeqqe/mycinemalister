@@ -14,7 +14,7 @@
         <a class="nav-link" href="#">Your lists</a>
       </li>
       <li class="nav-item link-btn pt-4">
-        <a class="nav-link" href="">New List</a> <!-- Pitäis toho saada users/<string:username>/create -->
+        <a class="nav-link" href="/users/{{ current_user.username }}/create">New List</a>
       </li>
       <li class="nav-item link-btn pt-4">
         <a class="nav-link" href="/movie-lists">All Lists</a>
@@ -24,7 +24,7 @@
     <ul class="navbar-nav mx-auto">
 
       <li class="nav-item link-btn pt-4">
-          <a class="nav-link text-dark font-weight-bold">{{ session['username'] }}</a>
+          <a class="nav-link text-dark font-weight-bold">{{ current_user.username }}</a>
       </li>
        
       <li class="nav-item link-btn pt-4">
