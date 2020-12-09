@@ -2,8 +2,21 @@
 
 
 {% block content%}
-<div class="base-bg">
 {% include 'user_navbar.html'%}
-
-</div>
+    <h2 class="text-light text-center">Your personal reviewed movie list</h2>
+    <div class="container mt-5">
+        {% for i in range(0,5)%}
+            <div class="d-inline-flex flex-row pt-3 pb-3 text-center">
+            <div class="col-sm mx-auto">
+                 <img class="card-img-top img-resize mx-auto" src="{{ movies.image_url }}" alt="Card image cap">
+                        <ul class="list-group list-group-flush img-resize">
+                    <li class="list-group-item">IMDb rating: <strong>{{movies.imdb_rating}}</strong></li>
+                    <li class="list-group-item">Release year: <strong>{{ movies.release_year }}</strong></li>
+                    <li class="list-group-item">My rating: <strong>{{ movies.user_rating }}</strong></li>
+                    <li class="list-group-item text-center">{{ movies.user_comment }}</li>
+                </ul>
+            </div>
+            </div>
+            {% endfor %}
+        </div>
 {% endblock content %}

@@ -1,10 +1,11 @@
 {% include 'base.html'%}
 
 {% block content%}
-<div class="base-bg">
 {% include 'navbar.html' %}
 
-{% if "logged_in" not in session and not session["logged_in"]%}
+{% if current_user.is_authenticated %}
+        <h4 class="text-center mt-5">Already logged in!</h4>
+{% else %}
 <div class="container">
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -35,8 +36,5 @@
       </div>
     </div>
   </div>
-</div>
-{% else %}
-        <h4 class="text-center mt-5">Already logged in!</h4>
 {% endif %}
 {% endblock content%}

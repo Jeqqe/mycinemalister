@@ -3,7 +3,7 @@ from flask_restful import Api
 from resources.auth import LoginResource, LogoutResource, RegisterResource
 from resources.user import UserListResource, UserResource, MeResource
 from resources.page import HomePage, LoginPage, RegisterPage, MovieList, UserHomePage
-from resources.movielist import CreateList, EditList, ViewList
+from resources.movielist import CreateList, EditList, ViewList, SearchMovie
 
 
 # Each resource created under resources/ that we want to use should be added here,
@@ -30,7 +30,11 @@ def init_app(app):
     api.add_resource(MovieList, "/movie-lists/")  # Kaikki listat näkyy tästä
 
     # Movielist resources
-    api.add_resource(ViewList, "/users/<string:username>/list")
+    # Käyttäjän omat listat
+    api.add_resource(ViewList, "/users/<string:username>/lists")
+    # Luo uusi lista
     api.add_resource(CreateList, "/users/<string:username>/create")
+    # Editoi tietyn listan
     api.add_resource(EditList, "/users/<string:username>/<int:list_id>/edit")
 
+    api.add_resource(SearchMovie, "/users/<string:username>/create/movies")
