@@ -1,14 +1,12 @@
 {% include 'base.html' %}
 
 {% block content%}
-<div class="base-bg">
-{% if "logged_in" in session and session["logged_in"]%}
+{% if current_user.is_authenticated %}
 {% include 'user_navbar.html'%}
 {% else %}
-{% include 'navbar.html' %}
+{% include 'navbar.html'%}
 {% endif %}
 All movies listed:
 for loopilla kaikki listat läpi tähän.
 
-</div>
 {% endblock content%}

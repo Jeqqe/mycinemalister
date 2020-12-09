@@ -50,7 +50,7 @@ class RegisterResource(Resource):
             return {"message": "email already used"}, HTTPStatus.BAD_REQUEST
 
         password = hash_password(non_hash_password)
-        user = User(username=username,email=email,password=password)
+        user = User(username=username, email=email, password=password)
         user.save()
-        
+
         return redirect("/login")

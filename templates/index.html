@@ -1,7 +1,6 @@
 {% include 'base.html' %}
 
 {% block content%}
-<div class="base-bg">
 {% if current_user.is_authenticated %}
 {% include 'user_navbar.html'%}
 {% else %}
@@ -26,5 +25,4 @@
             {% endif %}
         </div>
     </div>
-</div>
 {% endblock content %}

@@ -1,5 +1,10 @@
-
-
+body {
+  background-image: linear-gradient(to right top, #966e84, #866881, #75637c, #665d75, #57576d, #51596e, #4b5b6f, #465d6e, #466877, #46727d, #497d82, #508784);
+  height:100vh;
+  margin:0;
+  padding:0;
+  background-attachment: fixed;
+}
 /* TYPOGRAPHY (Tekstien tyylit) */
 
 .welcome-text {
@@ -16,14 +21,6 @@ a {
 
 /* CLASSES */
 
-.base-bg {
-  background-image: linear-gradient(to right top, #966e84, #866881, #75637c, #665d75, #57576d, #51596e, #4b5b6f, #465d6e, #466877, #46727d, #497d82, #508784);
-  height:100vh;
-  margin:0;
-  padding:0;
-
-}
-
 .link-btn {
   letter-spacing: 1.5px;
   margin-left:5px;
@@ -34,18 +31,7 @@ a {
     /*background-color: rgb(109, 108, 146) !important;*/
 }
 
-.card {
-  background-color: rgba(255, 255, 255,0.6) !important;
-  border-radius:25px;
-}
 
-.card-body {
-  background-color: rgba(255, 255, 255,0.6) !important;
-  box-shadow: 0px 8px 19px -4px rgba(0,0,0,0.75);
--webkit-box-shadow: 0px 8px 19px -4px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 8px 19px -4px rgba(0,0,0,0.75);
-  border-radius:25px;
-}
 
 .form-signin {
     width: 100%;
@@ -77,5 +63,14 @@ a {
     border-top-right-radius: 0;
   }
 
+.img-resize {
+  width:320px;
+  height:auto;
+}
+
+.center-movie-items {
+  justify-content: center;
+  align-items: center;
+}
 
 /* ID'S */

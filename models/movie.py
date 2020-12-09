@@ -1,5 +1,6 @@
 from extensions import db
 
+
 class Movie(db.Model):
     __tablename__ = "movie"
 
@@ -7,14 +8,13 @@ class Movie(db.Model):
     movie_title = db.Column(db.String(256))
     image_url = db.Column(db.String(256))
     imdb_rating = db.Column(db.String(10))
-    release_year = db.Column(db.String(10))
+    release_year = db.Column(db.String(4))
 
     is_publish = db.Column(db.Boolean(), default=False)
     created_at = db.Column(db.DateTime(), nullable=False,
                            server_default=db.func.now())
     updated_at = db.Column(db.DateTime(), nullable=False,
                            server_default=db.func.now(), onupdate=db.func.now())
-
 
     @classmethod
     def get_all_published(cls):
