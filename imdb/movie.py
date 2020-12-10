@@ -3,26 +3,27 @@ import requests
 # Handles all imdb api related stuff
 class IMDB:
 
-    api = "https://imdb-api.com/en/API/"
-    key = "k_rn5hp3uz"
+    api = "http://www.omdbapi.com/?apikey="
+    key = "2debe9fe"
 
     # Requests additional info about the movie
-    def getMoreInfo(self, movie_id):
-        return requests.get(self.api + f"Title/{self.key}/{movie_id}").json()
+    def getImdbRating(self, movie_id):
 
+        return requests.get(self.api + f"{self.key}&i={movie_id}&type=movie").json()
 
     # Requests movie ids that match the search keyword(s)
     def searchMovie(self, to_search_for):
         from models.movie import Movie as db
 
-        req = requests.get(self.api + f"SearchMovie/{self.key}/{to_search_for}").json()
+        #print(self.api + f"{self.key}&s={to_search_for}&type=movie")
+        req = requests.get(self.api + f"{self.key}&s={to_search_for}&type=movie").json()
 
-        if req["errorMessage"] != "":
-            return "Something went wrong, no movies found."
+        if req["Response"] == "False":
+            return req
 
         results = {}
-        for result in req["results"]:
-            movie_id = result["id"]
+        for result in req["Search"]:
+            movie_id = result["imdbID"]
 
             # If movie is already in db, use the data from there
             info = db.get_by_id(movie_id)
@@ -36,19 +37,22 @@ class IMDB:
                 continue
 
             # If movie not in db, request it from the api & add to the database
-            info = self.getMoreInfo(movie_id)
+            info = self.getImdbRating(movie_id)
+            if info["Response"] == "False":
+                return req
+
             results[movie_id] = {
-                "title": info["title"],
-                "image_url": info["image"],
-                "release": info["year"],
-                "imdb_rating": info["imDbRating"]
+                "title": result["Title"],
+                "image_url": info["Poster"],
+                "release": info["Year"],
+                "imdb_rating": info["imdbRating"]
             }
 
             db(id=movie_id,
                movie_title=results[movie_id]["title"],
                image_url=results[movie_id]["image_url"],
-               imdb_rating=results[movie_id]["release"],
-               release_year=results[movie_id]["imdb_rating"]
+               imdb_rating=results[movie_id]["imdb_rating"],
+               release_year=results[movie_id]["release"]
                ).save()
 
         return results

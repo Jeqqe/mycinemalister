@@ -1,9 +1,9 @@
 from flask_restful import Api
 
-from resources.auth import LoginResource, LogoutResource, RegisterResource
-from resources.user import UserListResource, UserResource, MeResource
-from resources.page import HomePage, LoginPage, RegisterPage, MovieList, UserHomePage
-from resources.movielist import CreateList, EditList, ViewList, SearchMovie
+from resources.auth import Login, Logout, Register
+# from resources.user import UserListResource, UserResource, MeResource <- Ei käytössä tällä hetkel
+from resources.page import HomePage, UserHomePage
+from resources.movie import EditList, ViewList, MovieList, SearchMovie
 
 
 # Each resource created under resources/ that we want to use should be added here,
@@ -13,28 +13,23 @@ def init_app(app):
 
     api = Api(app)
 
+    """
     # User resources
     api.add_resource(UserListResource, "/users")
     api.add_resource(UserResource, "/users/<string:username>")
     api.add_resource(MeResource, "/me")
+    """
 
     # Auth resources
-    api.add_resource(LoginResource, "/auth/login")
-    api.add_resource(LogoutResource, "/auth/logout")
-    api.add_resource(RegisterResource, "/auth/register")
+    api.add_resource(Login, "/auth/login")
+    api.add_resource(Logout, "/auth/logout")
+    api.add_resource(Register, "/auth/register")
 
     # Page resources
     api.add_resource(HomePage, "/")
-    api.add_resource(LoginPage, "/login/")
-    api.add_resource(RegisterPage, "/register/")
-    api.add_resource(MovieList, "/movie-lists/")  # Kaikki listat näkyy tästä
 
-    # Movielist resources
-    # Käyttäjän omat listat
-    api.add_resource(ViewList, "/users/<string:username>/lists")
-    # Luo uusi lista
-    api.add_resource(CreateList, "/users/<string:username>/create")
-    # Editoi tietyn listan
-    api.add_resource(EditList, "/users/<string:username>/<int:list_id>/edit")
-
-    api.add_resource(SearchMovie, "/users/<string:username>/create/movies")
+    # Movie/review resources
+    api.add_resource(SearchMovie, "/reviews/create")  # Uusien leffojen etsiminen ja luominen
+    api.add_resource(MovieList, "/reviews/all")  # Kaikki reviewt näkyy tästä
+    api.add_resource(ViewList, "/reviews/mine")  # Käyttäjän oma lista
+    api.add_resource(EditList, "/reviews/<string:list_id>/edit") # Editoi tietyn listan
