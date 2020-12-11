@@ -1,3 +1,13 @@
+"""
+
+
+/// Tällä hetkellä turha file ///
+
+
+
+
+
+
 from flask import request, session
 from flask_restful import Resource
 from http import HTTPStatus
@@ -61,3 +71,5 @@ class MeResource(Resource):
             'email': user.email,
         }
         return data, HTTPStatus.OK
+
+"""

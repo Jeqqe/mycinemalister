@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from flask import request, redirect
+from flask import request, redirect, make_response, render_template
 from flask_login import login_user, login_required, logout_user
 from flask_restful import Resource
 
@@ -8,7 +8,12 @@ from utils import check_password, hash_password
 from models.user import User
 
 
-class LoginResource(Resource):
+class Login(Resource):
+
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('login.html'), 200, headers)
+
 
     def post(self):
 
@@ -26,7 +31,7 @@ class LoginResource(Resource):
         return redirect("/")
 
 
-class LogoutResource(Resource):
+class Logout(Resource):
 
     @login_required
     def get(self):
@@ -35,7 +40,11 @@ class LogoutResource(Resource):
         return redirect("/")
 
 
-class RegisterResource(Resource):
+class Register(Resource):
+
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('register.html'), 200, headers)
 
     def post(self):
 
@@ -53,4 +62,4 @@ class RegisterResource(Resource):
         user = User(username=username, email=email, password=password)
         user.save()
 
-        return redirect("/login")
+        return redirect("/auth/login")

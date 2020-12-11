@@ -1,0 +1,41 @@
+{% include 'base.html' %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+{% include 'user_navbar.html'%}
+{% else %}
+{% include 'navbar.html' %}
+{% endif %}
+
+<div class="container">
+                    <h5 class="card-title text-center text-light m-5">Create your movie review!</h5>
+                    <form class="form-label-group text-center" name="search_movie" method="POST" action="/reviews/create">
+                        <div>
+                            <h3 class="text-center text-light mb-4">Start by searching a movie you want to review</h3>
+                            <input type="text" name="movie_title" class="form-control text-center col-md-6 mx-auto" placeholder=" Ex. Shrek 2">
+                        </div>
+
+                        <button class="btn btn-info btn-block mx-auto mt-2 text-center col-md-6" type="submit">Search</button>
+                    </form>
+
+
+    {% if error != None %}
+        <h3 class="text-center text-light mb-4">{{ error }}</h3>
+    {% else %}
+        {% for key in search_results.keys() %}
+            <div class="d-inline-flex flex-row pt-3 pb-3 text-center">
+                <div class="col-sm mx-auto">
+                    <img class="card-img-top img-resize mx-auto" src="{{ search_results[key]['image_url'] }}" alt="Card image cap">
+                    <ul class="list-group list-group-flush img-resize">
+                        <li class="list-group-item"><strong>{{ search_results[key]["title"] }}</strong></li>
+                        <li class="list-group-item">IMDb rating: <strong>{{ search_results[key]["imdb_rating"] }}</strong></li>
+                        <li class="list-group-item">Release year: <strong>{{ search_results[key]["release"] }}</strong></li>
+                    </ul>
+                    <button class="btn btn-info btn-block mx-auto mt-2 text-center col-md-6" type="submit">Review Movie</button>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% endblock content %}
