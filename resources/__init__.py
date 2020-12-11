@@ -3,12 +3,14 @@ from flask_restful import Api
 from resources.auth import Login, Logout, Register
 # from resources.user import UserListResource, UserResource, MeResource <- Ei käytössä tällä hetkel
 from resources.page import HomePage, UserHomePage
-from resources.movie import EditList, ViewList, MovieList, SearchMovie
+from resources.movie import EditList, ViewList, MovieList, SearchMovie, CreateMovieReview, EditMovieReview
 
 
 # Each resource created under resources/ that we want to use should be added here,
 # create_app() will then call the init_app() function on app.py to set them up.
 # This makes the app file look much cleaner & more organized.
+
+
 def init_app(app):
 
     api = Api(app)
@@ -33,3 +35,5 @@ def init_app(app):
     api.add_resource(MovieList, "/reviews/all")  # Kaikki reviewt näkyy tästä
     api.add_resource(ViewList, "/reviews/mine")  # Käyttäjän oma lista
     api.add_resource(EditList, "/reviews/<string:list_id>/edit") # Editoi tietyn listan
+    api.add_resource(CreateMovieReview, "/reviews/new/<string:movie_id>")
+    api.add_resource(EditMovieReview, "/reviews/edit/<string:review_id>")

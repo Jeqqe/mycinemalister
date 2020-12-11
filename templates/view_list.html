@@ -5,18 +5,26 @@
 {% include 'user_navbar.html'%}
     <h2 class="text-light text-center">Your personal reviewed movie list</h2>
     <div class="container mt-5">
-        {% for i in range(0,5)%}
-            <div class="d-inline-flex flex-row pt-3 pb-3 text-center">
-            <div class="col-sm mx-auto">
-                 <img class="card-img-top img-resize mx-auto" src="{{ movies.image_url }}" alt="Card image cap">
-                        <ul class="list-group list-group-flush img-resize">
-                    <li class="list-group-item">IMDb rating: <strong>{{movies.imdb_rating}}</strong></li>
-                    <li class="list-group-item">Release year: <strong>{{ movies.release_year }}</strong></li>
-                    <li class="list-group-item">My rating: <strong>{{ movies.user_rating }}</strong></li>
-                    <li class="list-group-item text-center">{{ movies.user_comment }}</li>
-                </ul>
-            </div>
-            </div>
+        {% if lenght == 0 %}
+            <h3>You've not reviewed any movies yet!</h3>
+        {% else %}
+            {% for review in movies %}
+                <div class="d-inline-flex flex-row pt-3 pb-3 text-center">
+                <div class="col-sm mx-auto">
+                     <img class="card-img-top img-resize mx-auto" src="{{ review.image_url }}" alt="Card image cap">
+                            <ul class="list-group list-group-flush img-resize">
+                        <li class="list-group-item"><strong>{{review.movie_title}}</strong></li>
+                        <li class="list-group-item">IMDb rating: <strong>{{review.imdb_rating}}</strong></li>
+                        <li class="list-group-item">Release year: <strong>{{ review.release_year }}</strong></li>
+                        <li class="list-group-item">My rating: <strong>{{ review.user_rating }}</strong></li>
+                        <li class="list-group-item text-center">{{ review.user_review }}</li>
+                    </ul>
+                    <a href="/reviews/edit/{{review.review_id}}">
+                        <button class="btn btn-info btn-block mx-auto mt-2 text-center col-md-6" type="submit">Edit Review</button>
+                    </a>
+                </div>
+                </div>
             {% endfor %}
+        {% endif %}
         </div>
 {% endblock content %}
