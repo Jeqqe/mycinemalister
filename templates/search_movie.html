@@ -31,7 +31,9 @@
                         <li class="list-group-item">IMDb rating: <strong>{{ search_results[key]["imdb_rating"] }}</strong></li>
                         <li class="list-group-item">Release year: <strong>{{ search_results[key]["release"] }}</strong></li>
                     </ul>
-                    <button class="btn btn-info btn-block mx-auto mt-2 text-center col-md-6" type="submit">Review Movie</button>
+                    <a href="/reviews/new/{{key}}">
+                        <button class="btn btn-info btn-block mx-auto mt-2 text-center col-md-6" type="submit">Review Movie</button>
+                    </a>
                 </div>
             </div>
         {% endfor %}
