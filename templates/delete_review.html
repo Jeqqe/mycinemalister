@@ -7,9 +7,8 @@
 {% include 'navbar.html' %}
 {% endif %}
 
-<div class="container">
-    <h5 class="card-title text-center text-light m-5">Create a review for {{movie.movie_title}}</h5>
-    <form class="form-label-group text-center" name="search_movie" method="POST" action="/reviews/new/{{movie.id}}">
+<div class="container pb-5">
+    <form class="form-label-group text-center" name="search_movie" method="POST" action="/reviews/delete/{{review.id}}">
     <div>
          <div class="d-inline-flex flex-row pt-3 pb-3 text-center">
                 <div class="col-sm mx-auto">
@@ -21,18 +20,16 @@
                     </ul>
         </div>
     </div>
+
         <div class="d-flex flex-column">
-        <label for="review" class="text-light">Your review:</label>
-                    <textarea class="mx-auto mt-2 col-md-6" rows="8" name="review" placeholder="Your review here..."></textarea>
-                            <label for="rating" class="text-light mt-2">Your rating:</label>
-        <select name="rating" id="rating" class="mx-auto text-center">
-            {% for i in range(10) %}
-                <option value="{{ i+1 }}">{{ i+1  }}</option>
-            {% endfor %}
-        </select>
+                <h5 class="text-light mt-3">Your review: <br> {{review.user_review}}</h5>
+                <h5 class="text-light mt-3">Your rating: <br> {{review.user_rating}}</h5>
+
 
         </div>
-        <button class="btn btn-info mx-auto mt-2 text-center col-md-2" type="submit">Save review</button>
+    
+        <h4 class="text-warning">Are you sure you want to delete your review?</h4>
+        <button class="btn btn-danger mx-auto mt-4 text-center col-md-2" type="submit">Yes, delete my review</button>
     </form>
 </div>
 

@@ -5,6 +5,7 @@ from flask_restful import Resource
 from extensions import imdb
 from models.movie import Movie
 from models.review import Review
+from models.user import User
 
 
 class EditList(Resource):
@@ -16,7 +17,24 @@ class EditList(Resource):
 class MovieList(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('movie_lists.html'), 200, headers)
+        result = []
+        # Get all reviews
+        reviews = Review.query.all()
+        users = User.query.all()
+        for review in reviews:
+            movie_info = Movie.get_by_id(review.movie_id)
+            user_info = User.get_by_id(review.user_id)
+            result.append({
+                "image_url": movie_info.image_url,
+                "movie_title": movie_info.movie_title,
+                "imdb_rating": movie_info.imdb_rating,
+                "release_year": movie_info.release_year,
+                "user_username": user_info.username,
+                "user_rating": review.user_rating,
+                "user_review": review.user_review
+            })
+
+        return make_response(render_template('movie_lists.html', reviews=result), 200, headers)
 
 
 class ViewList(Resource):
@@ -66,7 +84,7 @@ class SearchMovie(Resource):
                 error = search_results["Error"]
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('search_movie.html', error= error, search_results = search_results), 200, headers)
+        return make_response(render_template('search_movie.html', error=error, search_results=search_results), 200, headers)
 
 
 class CreateMovieReview(Resource):
@@ -82,13 +100,14 @@ class CreateMovieReview(Resource):
     def post(self, movie_id):
 
         form = request.form
+        print(form)
 
         Review(
             user_rating=form["rating"],
             user_review=form["review"],
             user_id=current_user.id,
             movie_id=movie_id
-           ).save()
+        ).save()
 
         return redirect("/")
 
@@ -110,5 +129,22 @@ class EditMovieReview(Resource):
 
         review = Review.get_by_id(review_id)
         review.edit(review=form["review"], rating=form["rating"])
+
+        return redirect("/reviews/mine")
+
+
+class DeleteMovieReview(Resource):
+    # Load delete page for review
+    def get(self, review_id):
+
+        review = Review.get_by_id(review_id)
+        movie = Movie.get_by_id(review.movie_id)
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('delete_review.html', movie=movie, review=review), 200, headers)
+
+    def post(self, review_id):
+
+        review = Review.get_by_id(review_id)
+        review.delete()
 
         return redirect("/reviews/mine")

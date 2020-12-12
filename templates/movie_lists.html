@@ -6,7 +6,25 @@
 {% else %}
 {% include 'navbar.html'%}
 {% endif %}
-All movies listed:
-for loopilla kaikki listat läpi tähän.
 
+    <h2 class="text-light text-center">All of the reviewed movies by users</h2>
+        <div class="container mt-5">
+{% for review in reviews%}
+
+            <div class="d-inline-flex flex-row pt-3 pb-3 text-center">
+                <div class="col-sm mx-auto">
+                     <img class="card-img-top img-resize mx-auto" src="{{ review.image_url }}" alt="Card image cap">
+                            <ul class="list-group list-group-flush img-resize">
+                        <li class="list-group-item"><strong>{{review.movie_title}}</strong></li>
+                        <li class="list-group-item">IMDb rating: <strong>{{review.imdb_rating}}</strong></li>
+                        <li class="list-group-item">Release year: <strong>{{ review.release_year }}</strong></li>
+                        <li class="list-group-item">Rated by: <strong>{{ review.user_username }}</strong></li>
+                        <li class="list-group-item">User rating: <strong>{{ review.user_rating }}</strong></li>
+                        <li class="list-group-item text-center">{{ review.user_review }}</li>
+                    </ul>
+                </div>
+            </div>
+
+{% endfor %}
+        </div>
 {% endblock content%}

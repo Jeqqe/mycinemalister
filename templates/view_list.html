@@ -4,9 +4,12 @@
 {% block content%}
 {% include 'user_navbar.html'%}
     <h2 class="text-light text-center">Your personal reviewed movie list</h2>
+    {% if success %}
+    {{ success }}
+    {% endif %}
     <div class="container mt-5">
         {% if lenght == 0 %}
-            <h3>You've not reviewed any movies yet!</h3>
+            <h3 class="text-center">You've not reviewed any movies yet!</h3>
         {% else %}
             {% for review in movies %}
                 <div class="d-inline-flex flex-row pt-3 pb-3 text-center">
@@ -19,8 +22,11 @@
                         <li class="list-group-item">My rating: <strong>{{ review.user_rating }}</strong></li>
                         <li class="list-group-item text-center">{{ review.user_review }}</li>
                     </ul>
-                    <a href="/reviews/edit/{{review.review_id}}">
-                        <button class="btn btn-info btn-block mx-auto mt-2 text-center col-md-6" type="submit">Edit Review</button>
+                    <a href="/reviews/edit/{{review.review_id}}" class="m-2">
+                        <button class="btn btn-success mx-auto m-2  text-center" type="submit">Edit Review</button>
+                    </a>
+                    <a href="/reviews/delete/{{review.review_id}}" class="m-2">
+                        <button class="btn btn-danger mx-auto m-2 text-center" type="submit">Delete Review</button>
                     </a>
                 </div>
                 </div>
