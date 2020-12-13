@@ -25,7 +25,8 @@ class Login(Resource):
         user = User.get_by_email(email=email)
 
         if not user or not check_password(password, user.password):
-            return {"message": "email or password is incorrect"}, HTTPStatus.UNAUTHORIZED
+            headers = {'Content-Type': 'text/html'}
+            return make_response(render_template('login.html', error="Invalid email or password."), 401, headers)
 
         login_user(user, force=True)
         return redirect("/")
