@@ -1,9 +1,9 @@
+from flask import make_response, render_template
 from flask_restful import Api
 
 from resources.auth import Login, Logout, Register
-# from resources.user import UserListResource, UserResource, MeResource <- Ei käytössä tällä hetkel
-from resources.page import HomePage, UserHomePage
-from resources.movie import EditList, ViewList, MovieList, SearchMovie, CreateMovieReview, EditMovieReview, DeleteMovieReview
+from resources.page import HomePage
+from resources.movie import UserMovieReviews, MovieList, SearchMovie, CreateMovieReview, EditMovieReview, DeleteMovieReview
 
 
 # Each resource created under resources/ that we want to use should be added here,
@@ -15,15 +15,9 @@ def init_app(app):
 
     api = Api(app)
 
-    """
-    # User resources
-    api.add_resource(UserListResource, "/users")
-    api.add_resource(UserResource, "/users/<string:username>")
-    api.add_resource(MeResource, "/me")
-    """
-
     # Auth resources
     api.add_resource(Login, "/auth/login")
+    # login_required
     api.add_resource(Logout, "/auth/logout")
     api.add_resource(Register, "/auth/register")
 
@@ -31,12 +25,24 @@ def init_app(app):
     api.add_resource(HomePage, "/")
 
     # Movie/review resources
-    # Uusien leffojen etsiminen ja luominen
+    api.add_resource(MovieList, "/reviews/all")
+    # login_required
     api.add_resource(SearchMovie, "/reviews/create")
-    api.add_resource(MovieList, "/reviews/all")  # Kaikki reviewt näkyy tästä
-    api.add_resource(ViewList, "/reviews/mine")  # Käyttäjän oma lista
-    # Editoi tietyn listan
-    api.add_resource(EditList, "/reviews/<string:list_id>/edit")
+    # login_required
+    api.add_resource(UserMovieReviews, "/reviews/mine")
+
+    # login_required
     api.add_resource(CreateMovieReview, "/reviews/new/<string:movie_id>")
+    # login_required # ownership of review required
     api.add_resource(EditMovieReview, "/reviews/edit/<string:review_id>")
+    # login_required # ownership of review required
     api.add_resource(DeleteMovieReview, "/reviews/delete/<string:review_id>")
+
+
+
+    # Unauthorized access handler
+    @app.login_manager.unauthorized_handler
+    def unauthorized_callback():
+        headers = {'Content-Type': 'text/html'}
+        error_message = "Unauthorized access, please login before accessing this page."
+        return make_response(render_template('error.html', error_message=error_message), 401, headers)

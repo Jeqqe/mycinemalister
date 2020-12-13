@@ -14,6 +14,7 @@
             <h5 class="card-title text-center">Sign In To MyCinemaLister!</h5>
             <form class="form-signin" action="/auth/login" method="POST">
               <div class="form-label-group">
+                <p class="text-warning">{{error}}</p>
                 <label for="inputEmail">Email address</label>
                 <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
               </div>

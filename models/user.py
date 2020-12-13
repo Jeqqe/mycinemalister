@@ -12,7 +12,6 @@ class User(UserMixin, db.Model):
     is_active = db.Column(db.Boolean(), default=False)
     created_at = db.Column(db.DateTime(), nullable=False, server_default = db.func.now())
     updated_at = db.Column(db.DateTime(), nullable=False, server_default = db.func.now(), onupdate = db.func.now())
-    #movielists = db.relationship("movielist", backref="user")
 
     @classmethod
     def get_by_username(cls, username):

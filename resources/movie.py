@@ -1,5 +1,5 @@
 from flask import make_response, render_template, request, redirect
-from flask_login import current_user
+from flask_login import current_user, login_required
 from flask_restful import Resource
 
 from extensions import imdb
@@ -8,19 +8,14 @@ from models.review import Review
 from models.user import User
 
 
-class EditList(Resource):
-    def get(self):
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('edit_list.html'), 200, headers)
-
-
 class MovieList(Resource):
+
     def get(self):
         headers = {'Content-Type': 'text/html'}
         result = []
         # Get all reviews
         reviews = Review.query.all()
-        users = User.query.all()
+
         for review in reviews:
             movie_info = Movie.get_by_id(review.movie_id)
             user_info = User.get_by_id(review.user_id)
@@ -37,8 +32,9 @@ class MovieList(Resource):
         return make_response(render_template('movie_lists.html', reviews=result), 200, headers)
 
 
-class ViewList(Resource):
+class UserMovieReviews(Resource):
 
+    @login_required
     def get(self):
         headers = {'Content-Type': 'text/html'}
 
@@ -64,11 +60,13 @@ class ViewList(Resource):
 
 class SearchMovie(Resource):
 
+    @login_required
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('search_movie.html'), 200, headers)
 
     # Load the search results to the page
+    @login_required
     def post(self):
 
         movie_title = request.form['movie_title']
@@ -90,6 +88,7 @@ class SearchMovie(Resource):
 class CreateMovieReview(Resource):
 
     # Load the search results to the page
+    @login_required
     def get(self, movie_id):
 
         movie = Movie.get_by_id(movie_id)
@@ -97,6 +96,7 @@ class CreateMovieReview(Resource):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('new_review.html', movie=movie), 200, headers)
 
+    @login_required
     def post(self, movie_id):
 
         form = request.form
@@ -114,37 +114,58 @@ class CreateMovieReview(Resource):
 
 class EditMovieReview(Resource):
 
-    # Load the search results to the page
+    @login_required
     def get(self, review_id):
 
         review = Review.get_by_id(review_id)
         movie = Movie.get_by_id(review.movie_id)
 
         headers = {'Content-Type': 'text/html'}
+        if current_user.id != review.user_id: # Error, user isn't the owner of the review
+            error_message = "You're not the owner of the requested review."
+            return make_response(render_template('error.html', error_message=error_message), 401, headers)
+
         return make_response(render_template('edit_review.html', movie=movie, review=review), 200, headers)
 
+    @login_required
     def post(self, review_id):
 
         form = request.form
 
         review = Review.get_by_id(review_id)
-        review.edit(review=form["review"], rating=form["rating"])
+        if current_user.id != review.user_id: # Error, user isn't the owner of the review
+            error_message = "You're not the owner of the requested review."
+            headers = {'Content-Type': 'text/html'}
+            return make_response(render_template('error.html', error_message=error_message), 401, headers)
 
+        review.edit(review=form["review"], rating=form["rating"])
         return redirect("/reviews/mine")
 
 
 class DeleteMovieReview(Resource):
+
     # Load delete page for review
+    @login_required
     def get(self, review_id):
 
         review = Review.get_by_id(review_id)
         movie = Movie.get_by_id(review.movie_id)
         headers = {'Content-Type': 'text/html'}
+        if current_user.id != review.user_id: # Error, user isn't the owner of the review
+            error_message = "You're not the owner of the requested review."
+            return make_response(render_template('error.html', error_message=error_message), 401, headers)
+
         return make_response(render_template('delete_review.html', movie=movie, review=review), 200, headers)
 
+    @login_required
     def post(self, review_id):
 
         review = Review.get_by_id(review_id)
+        if current_user.id != review.user_id: # Error, user isn't the owner of the review
+            error_message = "You're not the owner of the requested review."
+            headers = {'Content-Type': 'text/html'}
+            return make_response(render_template('error.html', error_message=error_message), 401, headers)
+
         review.delete()
 
         return redirect("/reviews/mine")
